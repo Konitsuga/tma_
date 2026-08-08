@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="input-form">
+        <form action="/register" method="POST">
+            <h3 class="center">Register New User</h3>
+            <table class="center">
+                <tr>
+                    <td><label>Email ID: </label></td>
+                    <td><input type="email" name="emailid"></td>
+                </tr>
+                <tr>
+                    <td><label>Password: </label></td>
+                    <td><input type="password" name="pwd"></td>
+                </tr>
+                <tr>
+                    <td><label>Full name: </label></td>
+                    <td><input type="text" name="fname"></td>
+                </tr>
+                <tr>
+                    <td><label>User type: </label></td>
+                    <td>
+                        <select name="utype" id="utype"> <!--CHECK-->
+                            <option value="2" selected>Trekker</option>
+                            <option value="1">tStaff</option>
+                        </select>
+                    </td>
+                </tr>
+                <!--CHECK-->
+                <!--CHECK-->
+                <tr>
+                    <td><label>Address: </label></td>
+                    <td><textarea rows=5 cols=20 name="address"></textarea></td>
+                </tr>
+                <tr>
+                    <td><label>Phone no: </label></td>
+                    <td><input type="text" name="phno"></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Signup"></td>
+                    <td><a href="/login">Existing User?</a></td>
+                </tr>
+            </table>
+        <h6>{{err_msg}}</h6>
+        </form>
+        <!--CHECK-->
+    </div>
+    <h3 style="color:red">{{err_msg}}</h3> 
+{% endblock %}

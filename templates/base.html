@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/main.css">
+</head>
+<body>
+    <div class="container">
+        <div class="center">
+            <h2>Trekking Management Application</h2>
+        </div>
+        <div style="text-align: right;">
+            <input type="text" name="searchtxt"> | <input type="button" value="Search"> | <a href="/logout"</a>Logout</a> <!--CHECK-->
+        </div>
+        {% block content %}
+        <!-- sub html will be inserted-->
+        {% endblock %}
+    </div>
+</body>
+</html>

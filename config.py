@@ -1,0 +1,1 @@
+SECRET_KEY="IITM@Flask_Login_HMS_APP"
