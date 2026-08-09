@@ -29,3 +29,7 @@ def load_user(userID):
 from controller import *
 if __name__=="__main__":
     app.run(debug=True)
+
+
+# Upcoming Treks in admin_dashboard
+# date, trekLocation, trekStaff, trekker

@@ -4,6 +4,8 @@ from flask_login import UserMixin
 db=SQLAlchemy()
 
 # bk=booking, tk=trek, tr=trekker, ts=tStaff, 
+# tsID is actually userid. trID is actlually userid, ts_profile.id is actually staffid
+# tr_profile.id is actually trekkerid
 
 
 class User(db.Model,UserMixin):
@@ -44,7 +46,7 @@ class Booking(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     tk_id=db.Column(db.Integer, db.ForeignKey('trek.id'), nullable=False)
     tr_id=db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
-    booking_time=db.Column(db.DateTime) # FOR LATER
+    booking_time=db.Column(db.DateTime, default=datetime.utcnow) # FOR LATER
     status=db.Column(db.String,default='Booked') #booked/cancelled/completed
 
 

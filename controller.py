@@ -4,6 +4,8 @@ from flask_login import login_user, logout_user, login_required, current_user
 from models import *
 from datetime import datetime,timedelta
 
+# will impliment flash func later in the html files
+
 @app.route("/")
 def home():
     return render_template('home.html')
@@ -24,6 +26,7 @@ def signin():
                     return redirect(url_for('ts_dashboard', id=user.id))
                 else:
                     flash('WAIT!! Admin is approving your account.')
+                    return redirect(url_for('signin'))
             elif user.role==2:
                 login_user(user)
                 return redirect(url_for('tr_dashboard', id=user.id))
@@ -50,7 +53,7 @@ def signup():
         phno=request.form.get("phno")
         if int(role)==2:
             tr_profile=Tr_Profile(trID=newUser.id,full_name=fname,address=address,phno=phno, status=0)
-            db.session.add(tr_profile) #if it patient role
+            db.session.add(tr_profile)
         else:
             # HERE
             # HERE
