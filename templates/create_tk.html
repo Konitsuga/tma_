@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="input-form">
+    <h3 class="center">Creaate New Trak</h3>
+    <br>
+    <form action="{{url_for('create_trek')}}" method="POST">
+    <table class="center">
+        <tr>
+            <td><label><stron>Trek Name: </stron></label></td>
+            <td><input type="text" name="name"></td>
+        </tr>
+        <tr>
+            <td><label><stron>Location: </stron></label></td>
+            <td><input type="text" name="location"></td>
+        </tr>
+        <tr>
+            <td><label><stron>Duration (days): </stron></label></td>
+            <td><input type="number" name="duration" min="1" required></td>
+            <!-- <td><input type="number" name="duration" min="1" ></td> -->
+        </tr>
+        <tr>
+            <td><label><strong>Difficulty: </strong></label></td>
+            <td>
+                <select name="difficulty">
+                    <option value="Easy">Easy</option>
+                    <!-- <option value="Moderate">Moderate</option> -->
+                    <option value="Moderate" selected>Moderate</option>
+                    <option value="Hard">Hard</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label><strong>Available Slots: </strong></label></td>
+            <!-- <td><input type="number" name="slots"></td> -->
+            <td><input type="number" name="slots" min="1" required></td>
+        </tr>
+        <tr>
+            <td><label><strong>Start Date: </strong></label></td>
+            <!-- <td><input type="date" name="start_dt"></td> -->
+            <td><input type="date" name="start_dt" required></td>
+        </tr>
+        <tr>
+            <td><label><strong>End Date: </strong></label></td>
+            <!-- <td><input type="date" name="end_dt"></td> -->
+            <td><input type="date" name="end_dt" required></td>
+        </tr>
+        <tr>
+            <td><label><strong>Assign Staff: </strong></label></td>
+            <td>
+                <select name="ts_id">
+                    <option value="" disabled selected>Select approved staff</option>
+                    {% for staff in staff_list%}
+                    <option value="{{staff.id}}">{{staff.full_name}}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="center">
+                <button type="submit" class="btn-link btn-done">Create Trek</button>
+                <a href="{{url_for('admin_dashboard')}}"><button class="btn-link btn-danger">Cancel</button></a>
+            </td>
+        </tr>
+    </table>
+    
+    </form>
+</div>
+{% endblock %}
