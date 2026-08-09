@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="dashboard-form">
+        <h3 class="center">Welcome, {{staff.full_name}}</h3>
+            <br>
+            <table class="center" name="AssignedTreks" border="1">
+                <caption>Assigned Treks</caption>
+                <tr>
+                    <th>Trek Name</th>
+                    <th>Location</th>
+                    <th>Dates</th>
+                    <th>Slots Left</th>
+                    <th>Total Bookings</th>
+                    <th>Current Status</th>
+                    <th>Update Status</th>
+                    <!-- <th colspan="2">Action</th> -->
+                </tr>
+                {% for t in treks %}
+                <tr>
+                    <td>{{t.name}}</td>
+                    <td>{{t.location}}</td>
+                    <td>{{t.start_dt}}-{{t.end_dt}}</td>
+                    <td>{{t.slots}}</td>
+                    <td>{{t.bookings|length}}</td>
+                    <td><strong>{{t.status}}</strong></td>
+                    <td>
+                        <form action="{{url_for('update_tkStatus', trek_id=t.id)}}" method="POST">
+                            <select name="status">
+                                <option value="Pending" {% if t.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                <option value="Approved" {% if t.status == 'Approved' %}selected{% endif %}>approved</option>
+                                <option value="Open" {% if t.status == 'Open' %}selected{% endif %}>Open</option>
+                                <opton value="Closed" {% if t.status == 'Closed' %}selected{% endif %}>Closed</option>
+                                <option value="Completed" {% if t.status == 'Completed' %}selected{% endif %}>Completed</option>
+                            </select>
+                            <button type="submit" class="btn-link btn-done">Update</button>
+                        </form>
+                    </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="center">You don't have asigned tracks</td>
+                    </tr>
+                {% endfor %}
+                
+                </table>
+
+                <table class="center" name="Participants" border="1">
+                    <caption>Registered Participants</caption>
+                    <tr>
+                        <th>Trek Name</th>
+                        <th>Trekker Name</th>
+                        <th>Contact Info</th>
+                        <th>Booking Date</th>
+                    </tr>
+                    {% set has_bookings = false %} <!--LATER-->
+                    {% for t in treks %}
+                        {% for b in t.bookings %}
+                            {% set has_bookings = true %} <!---LATER-->
+                    <tr>
+                        <td>{{t.name}}</td>
+                        <td>{{b.users.trekkers[0].full_name}}</td>
+                        <td>{{b.users.trekkers[0].phno}}</td>
+                        <td>
+                            {% if b.booking_time %}
+                            {{b.booking_time.strftime('%d %b %Y, %H:%M')}} <!--LATER-->
+                            {% else %}
+                            N/A 
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+            {% if total_tr==0 %} <!--LATER-->
+            <tr>
+                <td colspan="3" class="center">No Treekkers here yet</td>
+            </tr>
+            {% endif %}
+        </table>
+    </div> 
+{% endblock %}
