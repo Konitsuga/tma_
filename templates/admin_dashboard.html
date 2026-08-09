@@ -26,8 +26,8 @@
                 <td>{{s.address}}</td>
                 <td>{{s.phno}}</td>
                 <td><a href="{{url_for('approve_ts', ts_id=s.id)}}" class='btn-link {% if s.status == 1 %} disabled-link {% endif %}' >Approve</a></td>   <!--LATER-->
-                <td><a href="/ed_ts?tsID={{s.tsID}}" class='btn-link btn-done'>Edit</a></td>
-                <td><a href="#" class='btn-link btn-danger'>Deactivate</a></td>
+                <!-- <td><a href="/ed_ts?tsID={{s.tsID}}" class='btn-link btn-done'>Edit</a></td> -->
+                <!-- <td><a href="#" class='btn-link btn-danger'>Deactivate</a></td> -->
             </tr>
             {% endfor %}
             </table>
@@ -71,7 +71,7 @@
                         <th>Trekker</th>
                         <th>Action</th>
                     </tr>
-                    {% for d in app_data %}
+                    {% for d in up_treks %}
                     <tr>
                         <!-- <td>{{d.pname}}</td> CHECK -->
                         <td>{{d.pname}}</td> <!--CHECK-->
