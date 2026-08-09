@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="dashboard-form">
+            <h3 class="center">Welcome, {{current_user.trekkers[0].full_name}}</h3>
+            <br>
+            <table class="center" name="OpenTreks" border="1">
+                <caption>Open Treks</caption>
+                <tr>
+                    <th>Trek Name</th>
+                    <th>Location</th>
+                    <th>Difficulty</th>
+                    <th>Dates</th>
+                    <th>Slots</th>
+                    <th>Action</th>
+                </tr>
+                {% for t in open_treks %}
+                    <tr>
+                        <td>{{t.name}}</td>
+                        <td>{{t.location}}</td>
+                        <td>{{t.difficulty}}</td>
+                        <td>{{t.start_dt}}-{{t.end_dt}}</td>
+                        <td>{{t.slots}}</td>
+                        <!-- <td><a href="/}}" class='btn-link btn-done'>view details</a>
+                        </td> -CHECK -->
+                        <td>
+                            <form action="{{url_for('book_trek', trek_id=t.id)}}" method="POST" style="margin: 0;">
+                                <input type="hidden" name="'booking_time" value="">
+                                <button type="submit" class="btn-link btn-done {% if t.slots <= 0 %} disabled-link {% endif %}">Book Now</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="center">No open tracks currently.</td>
+                    </tr>
+                {%endfor%}
+                </table>
+
+                <table class="center" name="MyBookings" border="1">
+                    <caption>My Bookings and History</caption>
+                    <tr>
+                        <th>Trek Name</th>
+                        <th>Location</th>
+                        <th>Duration</th>
+                        <th>Booking Date</th>
+                        <th>Booking Status</th>
+                        <th>Trek Status</th>
+                    </tr>
+                    {% for b in bookings %}
+                    <tr>
+                        <!-- <td>{{b.name}}</td> CHECK -->
+                        <td>{{b.treks.name}}</td> <!--CHECK-->
+                        <td>{{b.treks.location}}</td> <!--CHECK-->
+                        <td>{{b.treks.start_dt}}-{{b.treks.end_dt}}</td> <!--CHECK-->
+                        <td>
+                            {% if b.booking_time %}
+                            {{b.booking_time.strftime('%d %b %Y, %H:%M')}}
+                            {% else %}
+                            N/A 
+                            {% endif %}
+                        </td>
+                        <td>{{b.status}}</td>
+                        <td>{{b.treks.status}}</td>
+
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="center">You haven't booked tracks.</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+
+    </div> 
+{% endblock %}
