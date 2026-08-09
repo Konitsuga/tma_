@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="dashboard-form">
+        <form>
+        <h3 class="center">Admin Dashboard</h3>
+
+        <div class="center" style="margin-bottom:20px;">
+            <strong>Total Treks: </strong> {{total_treks}}
+            <strong>Total Trekkers: </strong> {{total_users}}
+            <strong>Total Staff: </strong> {{total_staff}}
+            <strong>Total Bookings: </strong> {{total_bookings}}
+        </div>
+
+        <table class="center" name="Staff" border="1">
+            <caption>Pending Trek Staff Approvla</caption>
+            <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Phone No.</th>
+                <th colspan="3">Actions</th>
+            </tr>
+            {% for s in pending_staff %}
+            <tr>
+                <!-- <td>{{s.id}}</td> CHECK -->
+                <td>{{s.full_name}}</td>
+                <td>{{s.address}}</td>
+                <td>{{s.phno}}</td>
+                <td><a href="{{url_for('approve_ts', ts_id=s.id)}}" class='btn-link {% if s.status == 1 %} disabled-link {% endif %}' >Approve</a></td>   <!--LATER-->
+                <td><a href="/ed_ts?tsID={{s.tsID}}" class='btn-link btn-done'>Edit</a></td>
+                <td><a href="#" class='btn-link btn-danger'>Deactivate</a></td>
+            </tr>
+            {% endfor %}
+            </table>
+
+            <table class="center" name="Treks" border="1">
+                <caption>Treks</caption>
+                <tr>
+                    <!-- <th>trekkerId</th> -->
+                    <th>Trek Name</th>
+                    <th>Location</th>
+                    <th>Start Date</th>
+                    <th>Assigned Staff</th>
+                    <th>Status</th>
+                    <th>Slots</th>
+                    <th colspan="2">Actions</th>
+                </tr>
+                {% for t in all_treks %}
+                <tr>
+                    <!-- <td>{{t.trekkerID}}</td> CHECK -->
+                    <td>{{t.name}}</td>
+                    <td>{{t.location}}</td>
+                    <td>{{t.start_dt}}</td>
+                    <td>{{t.staff.full_name if t.staff else 'Unassigned'}}</td>
+                    <td>{{t.status}}</td>
+                    <td>{{t.slots}}</td>
+                    <td><a href="/ed_tr?trID={{t.trID}}" class='btn-link'>Edit</a></td>
+                    <td><a href="#" class='btn-link btn-danger'>Deactivate</a></td>
+                </tr>
+                {% endfor %}
+                </table>
+                <br>
+                <div class="center">
+                    <a href="{{url_for('create_trek')}}" class="btn-link btn-done">Create New Trek</a>
+                </div>
+                <table class="center" name="Treks" border="1">
+                    <caption>Upcoming Treks</caption>
+                    <tr>
+                        <th>Date</th>
+                        <th>Location</th>
+                        <th>tStaff</th>
+                        <th>Trekker</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for d in app_data %}
+                    <tr>
+                        <!-- <td>{{d.pname}}</td> CHECK -->
+                        <td>{{d.pname}}</td> <!--CHECK-->
+                        <td>{{d.dname}}</td> <!--CHECK-->
+                        <td>{{d.spz}}</td> <!--CHECK-->
+                        <td><input type="button" value="View"></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+
+        </form>
+    </div> 
+{% endblock %}
