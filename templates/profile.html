@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="dashboard-form" style="width: 50%;">
+        <h3 class="center cap">{{pf.full_name}}</h3>
+        <br>
+        
+        <table class="center" style="text-align: left;">
+            <tr>
+                <th style="text-align: right; padding-right: 15px;">Email ID:</th>
+                <td>{{ current_user.email }}</td>
+            </tr>
+            <tr>
+                <th style="text-align: right; padding-right: 15px;">Account Type:</th>
+                <td>
+                    {% if current_user.role == 1 %} Trek Staff
+                    {% elif current_user.role == 2 %} Trekker
+                    {% endif %}
+                </td>
+            </tr>
+            
+            {% if current_user.role != 0 and pf %}
+            <tr>
+                <th style="text-align: right; padding-right: 15px;">Full Name:</th>
+                <td>{{ pf.full_name }}</td>
+            </tr>
+            <tr>
+                <th style="text-align: right; padding-right: 15px;">Phone No:</th>
+                <td>{{ pf.phno }}</td>
+            </tr>
+            <tr>
+                <th style="text-align: right; padding-right: 15px;">Address:</th>
+                <td>{{ pf.address }}</td>
+            </tr>
+            <tr>
+                <th style="text-align: right; padding-right: 15px;">Account Status:</th>
+                <td>
+                    {% if current_user.role == 2 %}
+                        {% if pf.status == 0 %}<strong style="color: green;">Active</strong>
+                        {% elif pf.status == 1 %}<strong style="color: red;">Deactivated</strong>{% endif %}
+                    {% elif current_user.role == 1 %}
+                        {% if pf.status == 0 %}<strong>Pending Approval</strong>
+                        {% elif pf.status == 1 %}<strong style="color: green;">Active</strong>
+                        {% elif pf.status == 2 %}<strong style="color: red;">Deactivated</strong>{% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endif %}
+        </table>
+        
+        <div class="center" style="margin-top: 30px;">
+            <a href="{{ url_for('edit_pf') }}" class="btn-link btn-done">Edit Profile</a>
+            
+            {% if current_user.role == 1 %}
+                <a href="{{ url_for('ts_dashboard', id=current_user.id) }}" class="btn-link" style="margin-left: 10px;">Dashboard</a>
+            {% elif current_user.role == 2 %}
+                <a href="{{ url_for('tr_dashboard', id=current_user.id) }}" class="btn-link" style="margin-left: 10px;">Dashboard</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

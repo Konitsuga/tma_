@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="dashboard-form">
+        <h3 class="center" style="margin-top: 15px;">Search Results for "{{ query }}"</h3>
+        
+        <div class="center" style="margin-bottom: 20px;">
+            <a href="{{ url_for('admin_dashboard') }}" class="btn-link btn-done">Dashboard</a>
+        </div>
+        <br><br>
+        <table class="center" name="tkResults" border="1" style="margin-bottom: 30px;">
+            <caption>Found Treks: ({{ tks|length }})</caption>
+            <tr>
+                <th>Trek</th>
+                <th>Location</th>
+                <th>Dates</th>
+                <th>Status</th>
+            </tr>
+            {% for t in tks %}
+            <tr>
+                <td>{{t.name}}</td>
+                <td>{{t.location}}</td>
+                <td>{{t.start_dt}} - {{t.end_dt}}</td>
+                <td>{{t.status}}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4" class="center">Not Found.</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+
+        <table class="center" name="tsResults" border="1" style="margin-bottom: 30px;">
+            <caption>Trek Staff ({{ ts|length }})</caption> <!--CSS?-->
+            <tr>
+                <th>Name</th>
+                <th>Phone No.</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            {% for s in ts %}
+            <tr>
+                <td>{{s.full_name}}</td>
+                <td>{{s.phno}}</td>
+                <td>
+                    {% if s.status == 0 %} Pending
+                    {% elif s.status == 1 %} <span style="color: green;">Active</span>
+                    {% elif s.status == 2 %} <span style="color: red;">Deactivated</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if s.status == 0 %}
+                        <a href="{{url_for('approve_ts', ts_id=s.id)}}" class='btn-link'>Approve</a>
+                    {% elif s.status == 1 %}
+                        <a href="{{url_for('toggle_ts', ts_id=s.id)}}" class='btn-link btn-danger'>Deactivate</a>
+                    {% elif s.status == 2 %}
+                        <a href="{{url_for('toggle_ts', ts_id=s.id)}}" class='btn-link btn-done'>Reactivate</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4" class="center">not Found</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+
+        <table class="center" name="TrekkerResults" border="1" style="margin-bottom: 30px;">
+            <caption>Trekkers: ({{ trs|length }})</caption>
+            <tr>
+                <th>Name</th>
+                <th>Phone No.</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            {% for t in trs %}
+            <tr>
+                <td>{{t.full_name}}</td>
+                <td>{{t.phno}}</td>
+                <td>
+                    {% if t.status == 0 %} <span style="color: green;">Active</span>
+                    {% elif t.status == 1 %} <span style="color: red;">Deactivated</span>
+                    {% endif %}
+                    <!-- {% elif t.status == 1 %} <span style="color: red;">Deactivated</span>
+                    {% endif %} -->
+                </td>
+                <td>
+                    {% if t.status == 0 %}
+                        <a href="{{url_for('toggle_tr', tr_id=t.id)}}" class='btn-link btn-danger'>Deactivate</a>
+                    {% elif t.status == 1 %}
+                        <a href="{{url_for('toggle_tr', tr_id=t.id)}}" class='btn-link btn-done'>Reactivate</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4" class="center">Not Found</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+{% endblock %}
