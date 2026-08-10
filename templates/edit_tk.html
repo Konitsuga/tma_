@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="input-form"">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3 class="center cap">Edit Trek: {{ tk.name }}</h3>
+        {% if is_admin %}
+            <a href="{{ url_for('admin_dashboard') }}" class="btn-link">Back to Dashboard</a>
+        {% else %}
+            <a href="{{ url_for('ts_dashboard', id=current_user.id) }}" class="btn-link">Back to Dashboard</a>
+        {% endif %}
+    </div>
+    
+    <br>
+    
+    <form action="{{ url_for('edit_trek', tk_id=tk.id) }}" method="POST">
+        <table class="center">
+            <tr>
+                <td style="text-align: right;"><label><strong>Trek Name: </strong></label></td>
+                <td><input type="text" name="name" value="{{ tk.name }}" {% if not is_admin %}disabled{% else %}required{% endif %}></td>
+            </tr>
+            <tr>
+                <td style="text-align: right;"><label><strong>Location: </strong></label></td>
+                <td><input type="text" name="location" value="{{ tk.location }}" {% if not is_admin %}disabled{% else %}required{% endif %}></td>
+            </tr>
+            <tr>
+                <td style="text-align: right;"><label><strong>Duration (Days): </strong></label></td>
+                <td><input type="number" name="duration" min="1" value="{{ tk.duration }}" {% if not is_admin %}disabled{% else %}required{% endif %}></td>
+            </tr>
+            <tr>
+                <td style="text-align: right;"><label><strong>Difficulty: </strong></label></td>
+                <td>
+                    <select name="difficulty" {% if not is_admin %}disabled{% endif %}>
+                        <option value="Easy" {% if tk.difficulty == 'Easy' %}selected{% endif %}>Easy</option>
+                        <option value="Moderate" {% if tk.difficulty == 'Moderate' %}selected{% endif %}>Moderate</option>
+                        <option value="Hard" {% if tk.difficulty == 'Hard' %}selected{% endif %}>Hard</option>
+                    </select>
+                </td>
+            </tr>
+            
+            <tr>
+                <td style="text-align: right;"><label><strong>Available Slots: </strong></label></td>
+                <td><input type="number" name="slots" min="0" value="{{ tk.slots }}" required></td>
+            </tr>
+
+            <tr>
+                <td style="text-align: right;"><label><strong>Start Date: </strong></label></td>
+                <td><input type="date" name="start_dt" value="{{ tk.start_dt.strftime('%Y-%m-%d') }}" {% if not is_admin %}disabled{% else %}required{% endif %}></td>
+            </tr>
+            <tr>
+                <td style="text-align: right;"><label><strong>End Date: </strong></label></td>
+                <td><input type="date" name="end_dt" value="{{ tk.end_dt.strftime('%Y-%m-%d') }}" {% if not is_admin %}disabled{% else %}required{% endif %}></td>
+            </tr>
+            
+            {% if is_admin %}
+            <tr>
+                <td style="text-align: right;"><label><strong>Reassign Staff: </strong></label></td>
+                <td>
+                    <select name="ts_id">
+                        {% for ts in ts_list %}
+                        <option value="{{ ts.id }}" {% if tk.ts_id == ts.id %}selected{% endif %}>
+                            {{ ts.full_name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            {% endif %}
+            
+            <tr>
+                <td colspan="2" class="center"">
+                    <button type="submit" class="btn-link btn-done">Save Trek Details</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <br>
+    <h4 class="center cap">Manage Participants ({{ tk.bookings|length }})</h4>
+    <table class="center" border="1">
+        <tr>
+            <th>Trekker </th>
+            <th>Phone</th>
+            <th>Booking Time</th>
+            <th>Current Status</th>
+            <th>Update Status</th>
+        </tr>
+        {% for b in tk.bookings %}
+        <tr>
+            <td>{{ b.users.trekkers[0].full_name }}</td>
+            <td>{{ b.users.trekkers[0].phno }}</td>
+            <td>
+                {% if b.booking_time %}
+                    {{ b.booking_time.strftime('%d %b %Y, %H:%M') }}
+                {% else %}
+                    N/A
+                {% endif %}
+            </td>
+            <td><strong>{{ b.status }}</strong></td>
+            <td>
+                <form action="{{ url_for('update_booking', booking_id=b.id) }}" method="POST" style="margin: 0;">
+                    <select name="status">
+                        <option value="Booked" {% if b.status == 'Booked' %}selected{% endif %}>Booked</option>
+                        <option value="Cancelled" {% if b.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                        <option value="Completed" {% if b.status == 'Completed' %}selected{% endif %}>Completed</option>
+                    </select>
+                    <button type="submit" class="btn-link btn-done">Update</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5" class="center">Unbooked trak</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+{% endblock %}

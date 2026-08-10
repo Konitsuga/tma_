@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="input-form" style="width: 50%; padding: 20px; margin-top: 20px;">
+        <h3 class="center cap">Edit</h3>
+        <br>
+        
+        <form action="{{ url_for('edit_pf') }}" method="POST">
+            <table class="center" style="width: 100%; border-spacing: 10px 15px;">
+                
+                {% if current_user.role != 0 %} <!--CHECK LATER-->
+                <tr>
+                    <td style="text-align: right;"><label>Full Name:</label></td>
+                    <td><input type="text" name="full_name" value="{{ pf.full_name }}" required></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;"><label>Phone No:</label></td>
+                    <td><input type="text" name="phno" value="{{ pf.phno }}" required></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;"><label>Address:</label></td>
+                    <td><input type="text" name="address" value="{{ pf.address }}" required></td>
+                </tr>
+                {% endif %}. <!--ChECHK AGAIN-->
+
+                <tr>
+                    <td style="text-align: right;"><label>New Password:</label></td>
+                    <td><input type="password" name="pwd" placeholder="Leave blank to keep current"></td>
+                </tr>
+                
+                <tr>
+                    <td colspan="2" class="center"">
+                        <button type="submit" class="btn-link btn-done" style="border: none; font-size: 14px;">Save Changes</button>
+                        
+                        {% if current_user.role == 0 %}
+                            <a href="{{ url_for('admin_dashboard') }}" class="btn-link btn-danger">Cancel</a>
+                        {% elif current_user.role == 1 %}
+                            <a href="{{ url_for('ts_dashboard', id=current_user.id) }}" class="btn-link btn-danger">Cancel</a>
+                        {% elif current_user.role == 2 %}
+                            <a href="{{ url_for('tr_dashboard', id=current_user.id) }}" class="btn-link btn-danger">Cancel</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+{% endblock %}
