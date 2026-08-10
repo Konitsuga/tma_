@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="dashboard-form">
-        <h3 class="center">Welcome, {{staff.full_name}}</h3>
-            <br>
+        <h3 class="center cap">Welcome, {{staff.full_name}}</h3>
+            <br><br><br>
             <table class="center" name="AssignedTreks" border="1">
-                <caption>Assigned Treks</caption>
+                <caption class="cap">Assigned Treks</caption>
                 <tr>
                     <th>Trek Name</th>
                     <th>Location</th>
@@ -23,17 +23,19 @@
                     <td>{{t.slots}}</td>
                     <td>{{t.bookings|length}}</td>
                     <td><strong>{{t.status}}</strong></td>
-                    <td>
+                    <td >
                         <form action="{{url_for('update_tkStatus', trek_id=t.id)}}" method="POST">
                             <select name="status">
                                 <option value="Pending" {% if t.status == 'Pending' %}selected{% endif %}>Pending</option>
                                 <option value="Approved" {% if t.status == 'Approved' %}selected{% endif %}>approved</option>
                                 <option value="Open" {% if t.status == 'Open' %}selected{% endif %}>Open</option>
-                                <opton value="Closed" {% if t.status == 'Closed' %}selected{% endif %}>Closed</option>
+                                <option value="Closed" {% if t.status == 'Closed' %}selected{% endif %}>Closed</option>
                                 <option value="Completed" {% if t.status == 'Completed' %}selected{% endif %}>Completed</option>
                             </select>
                             <button type="submit" class="btn-link btn-done">Update</button>
+                            <a href="{{ url_for('edit_trek', tk_id=t.id) }}" class="btn-link">Edit</a>
                         </form>
+                        
                     </td>
                     </tr>
                     {% else %}
@@ -43,9 +45,10 @@
                 {% endfor %}
                 
                 </table>
+                <br>
 
                 <table class="center" name="Participants" border="1">
-                    <caption>Registered Participants</caption>
+                    <caption class="cap">Registered Participants</caption>
                     <tr>
                         <th>Trek Name</th>
                         <th>Trekker Name</th>

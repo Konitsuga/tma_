@@ -1,10 +1,50 @@
 .container{
-    border: 2px solid black;
+    border: 0.5px solid red;
     border-radius: 10px;
     padding-bottom: 20px;
     padding-right: 5%; /* DIFFERENCE BW % and px ?*/
     padding-left: 5%;
     margin: 5px;
+}
+
+/* .table{
+  border: 0.5px solid rgba(255, 0, 0, 0.891);
+  margin: auto;
+  text-align: center;
+  color:rgb(128, 3, 3) 
+}*/
+
+.head{
+  border: 2px solid rgb(225, 170, 170);
+  border-radius: 5px;
+  background-color: #b50404; 
+  color:#f9e9e9; 
+  font-family: monospace;
+  font-size:25px;
+}
+
+.box{
+  border:0.5px solid red;
+  border-radius:10%;
+  font-weight:bold;
+  width: fit-content;
+  padding: 3%;
+}
+
+.cap{
+  background-color: rgba(255, 0, 0, 0.202);
+  color:rgb(255, 1, 1);
+  border: 0.5px solid rgba(255, 0, 0, 0.861);
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.cap1{
+  background-color: rgba(255, 0, 0, 0.202);
+  color:rgb(18, 3, 130);
+  border: 0.5px solid rgba(255, 0, 0, 0.861);
+  border-radius: 5px;
+  font-size: 23px;
 }
 
 .center{
@@ -19,4 +59,79 @@
     border-radius: 10px;
     font-size: 15px;
     text-align: justify;
+    color:rgba(255, 0, 0, 0.848)
+}
+
+.dashboard-form{
+    border: 0.1px solid rgb(255, 0, 0);
+    margin: auto;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.btn-link {
+  /* padding and margins to behave correctly */
+  display: inline-block; 
+  border: 0.5px solid red;   
+  
+  /* dimensions and spacing */
+  padding: 4px 10px;
+  
+  /* Adjustments */
+  text-decoration: none; /* Removes the default underline */
+  font-family: sans-serif;
+  font-weight: bold;
+  
+  /* Coloured Button  */
+  background-color: solid rgb(190, 189, 189);
+  color: rgba(21, 5, 141, 0.94);
+  border-radius: 10px;
+  
+  /* Interactive transition */
+  transition: background-color 1s ease;
+  cursor: pointer;
+}
+
+/* Hover state for user feedback */
+.btn-link:hover {
+  background-color: solid black;
+}
+
+/* Blue Button  */
+.btn-info{
+  background-color: solid black;
+  color: hsl(217, 94%, 47%);
+  border-radius: 10px;
+}
+
+/* red Button  */
+.btn-danger{
+  background-color: solid black;
+  color: #e00909;
+  border-radius: 10px;
+}
+
+/* green Button  */
+.btn-done{
+  background-color: solid black;
+  color: #04b737;
+  border-radius: 10px;
+}
+
+/* To disable buttions/links*/
+.disabled-link {
+    color: #3e24a4;      /* grey */
+    pointer-events: none; /* Disable click */
+    cursor: default;      /* arrow cursor */
+    text-decoration: none;/* Removes underline */
+}
+.disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.5;
+}
+
+/* To hide buttions/link*/
+.hidden {
+  display: none;
 }

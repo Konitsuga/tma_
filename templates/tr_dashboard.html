@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="dashboard-form">
-            <h3 class="center">Welcome, {{current_user.trekkers[0].full_name}}</h3>
-            <br>
+            <h3 class="center cap">Welcome, {{current_user.trekkers[0].full_name}}</h3>
+            <br><br>
             <table class="center" name="OpenTreks" border="1">
-                <caption>Open Treks</caption>
+                <caption class="cap">Open Treks</caption><br>
                 <tr>
                     <th>Trek Name</th>
                     <th>Location</th>
@@ -14,6 +14,7 @@
                     <th>Action</th>
                 </tr>
                 {% for t in open_treks %}
+                    {% if t.id not in booked_tkIDs %}
                     <tr>
                         <td>{{t.name}}</td>
                         <td>{{t.location}}</td>
@@ -31,13 +32,14 @@
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="6" class="center">No open tracks currently.</td>
+                        <td colspan="6" class="center">track not open currently.</td>
                     </tr>
-                {%endfor%}
+                    {%endif%}
+                {% endfor %}
                 </table>
-
+                <br>
                 <table class="center" name="MyBookings" border="1">
-                    <caption>My Bookings and History</caption>
+                    <caption class="cap">My Trek History</caption>
                     <tr>
                         <th>Trek Name</th>
                         <th>Location</th>

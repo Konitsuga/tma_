@@ -2,7 +2,7 @@
 {% block content %}
     <div class="input-form">
         <form action="/login" method="POST">
-            <h3 class="center">Login</h3>
+            <h3 class="center cap">Login</h3><br>
             <table class="center">
                 <tr>
                     <td><label>Email ID: </label></td>
@@ -13,11 +13,10 @@
                     <td><input type="password" name="pwd"></td>
                 </tr>
                 <tr>
-                    <td><input type="submit" value="Login"></td>
-                    <td><a href="/register">New User?</a></td>
+                    <td><a href="/register" class="btn-link">New User?</a><td>
+                    <td><input type="submit" value="Login" class="btn-link"></td>
                 </tr>
             </table>
         </form>
     </div>
 {% endblock %}
-<button></button>

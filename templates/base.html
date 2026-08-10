@@ -8,11 +8,40 @@
 <body>
     <div class="container">
         <div class="center">
-            <h2>Trekking Management Application</h2>
+            <h2 class="head">Trekking Management Application</h2>
         </div>
+        {% if current_user.role in [1, 2] %}
+            <a href="{{ url_for('view_profile') }}" class="btn-link">My Profile</a>
+        {% endif %}
+        {% if current_user.role in [0, 1, 2] %} 
+            <a href="{{ url_for('logout') }}" class="btn-link">Logout</a>
+        {% endif %}
         <div style="text-align: right;">
-            <input type="text" name="searchtxt"> | <input type="button" value="Search"> | <a href="/logout"</a><button btn-link>Logout</button></a> <!--SPACE-->
+            {% if current_user.role ==0 %}
+            <form action="{{ url_for('admin_search') }}" method="GET" style="display: inline;">
+                <input type="text" name="searchtxt" required>
+                <button type="submit" class="btn-link">Search</button>
+            </form>
+            {% endif %}
+            
+            <!-- {% if current_user.role==0 %} -->
+            
+            <!-- {% else %}
+                <a href="{{ url_for('signin') }}" class="btn-link">Login</a>
+            {% endif %} -->
         </div>
+        <div class="center" style="color: red; margin: 10px 0;">
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <ul style="list-style-type: none; padding: 0;">
+                {% for message in messages %}
+                  <li><strong>{{ message }}</strong></li>
+                {% endfor %}
+                </ul>
+              {% endif %}
+            {% endwith %}
+        </div>
+        <br>
         {% block content %}
         <!-- sub html will be inserted-->
         {% endblock %}

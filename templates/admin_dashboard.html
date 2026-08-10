@@ -2,17 +2,17 @@
 {% block content %}
     <div class="dashboard-form">
         <form>
-        <h3 class="center">Admin Dashboard</h3>
-
-        <div class="center" style="margin-bottom:20px;">
-            <strong>Total Treks: </strong> {{total_treks}}
-            <strong>Total Trekkers: </strong> {{total_users}}
-            <strong>Total Staff: </strong> {{total_staff}}
-            <strong>Total Bookings: </strong> {{total_bookings}}
+        <h3 class="center cap">Admin Dashboard</h3><br>
+        <div class="center cap" style="margin-bottom:20px;">
+            <div class="cap1">Analytics</div><br>
+            <strong class="cap1">Treks:  {{total_treks}}</strong><br>
+            <strong class="cap1">Trekkers:  {{total_users}}</strong><br>
+            <strong class="cap1">Staff:  {{total_staff}}</strong><br>
+            <strong class="cap1">Bookings:  {{total_bookings}}</strong><br><br>
         </div>
 
         <table class="center" name="Staff" border="1">
-            <caption>Pending Trek Staff Approvla</caption>
+            <caption class="cap";"><strong>Pending Trek Staff Approvla</strong></caption>
             <tr>
                 <th>Name</th>
                 <th>Location</th>
@@ -30,10 +30,79 @@
                 <!-- <td><a href="#" class='btn-link btn-danger'>Deactivate</a></td> -->
             </tr>
             {% endfor %}
-            </table>
+        </table>
+        <br>
+
+        <table class="center" name="StaffManagement" border="1" style="margin-bottom: 30px;">
+        <caption class="cap">Approved Staff</caption>
+        <tr>
+            <th>Name</th>
+            <th>Phone No.</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        {% for s in all_ts %}
+        <tr>
+            <td>{{s.full_name}}</td>
+            <td>{{s.phno}}</td>
+            <td>
+                {% if s.status == 1 %}
+                    <strong style="color: green;">Active</strong>
+                {% elif s.status == 2 %}
+                    <strong style="color: red;">Deactivated</strong>
+                {% endif %}
+            </td>
+            <td>
+                {% if s.status == 1 %}
+                    <a href="{{url_for('toggle_ts', ts_id=s.id)}}" class='btn-link btn-danger'>Deactivate</a>
+                {% elif s.status == 2 %}
+                    <a href="{{url_for('toggle_ts', ts_id=s.id)}}" class='btn-link btn-done'>Reactivate</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="4" class="center">No approved Staff</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <table class="center" name="trManagement" border="1" style="margin-bottom: 30px;">
+        <caption class="cap">Trekker Management</caption>
+        <tr>
+            <th>Name</th>
+            <th>Phone No.</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        {% for t in all_tr %}
+        <tr>
+            <td>{{t.full_name}}</td>
+            <td>{{t.phno}}</td>
+            <td>
+                {% if t.status == 0 %}
+                    <strong style="color: green;">Active</strong>
+                {% elif t.status == 1 %}
+                    <strong style="color: red;">Deactivated</strong>
+                {% endif %}
+            </td>
+            <td>
+                {% if t.status == 0 %}
+                    <a href="{{url_for('toggle_tr', tr_id=t.id)}}" class='btn-link btn-danger'>Deactivate</a>
+                {% elif t.status == 1 %}
+                    <a href="{{url_for('toggle_tr', tr_id=t.id)}}" class='btn-link btn-done'>Reactivate</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="4" class="center">No trekkers here yet</td>
+        </tr>
+        {% endfor %}
+    </table>
 
             <table class="center" name="Treks" border="1">
-                <caption>Treks</caption>
+                <caption class="cap"><strong>Treks</strong></caption>
                 <tr>
                     <!-- <th>trekkerId</th> -->
                     <th>Trek Name</th>
@@ -44,7 +113,7 @@
                     <th>Slots</th>
                     <th colspan="2">Actions</th>
                 </tr>
-                {% for t in all_treks %}
+                {% for t in all_tks %}
                 <tr>
                     <!-- <td>{{t.trekkerID}}</td> CHECK -->
                     <td>{{t.name}}</td>
@@ -53,17 +122,18 @@
                     <td>{{t.staff.full_name if t.staff else 'Unassigned'}}</td>
                     <td>{{t.status}}</td>
                     <td>{{t.slots}}</td>
-                    <td><a href="/ed_tr?trID={{t.trID}}" class='btn-link'>Edit</a></td>
-                    <td><a href="#" class='btn-link btn-danger'>Deactivate</a></td>
+                    <td><a href="{{url_for('edit_trek',tk_id=t.id)}}" class='btn-link'>Edit</a></td>
+                    <td><a href="#" class='btn-link btn-danger'>Deactivate</a></td> <!--CHECK LATER-->
                 </tr>
                 {% endfor %}
                 </table>
                 <br>
                 <div class="center">
-                    <a href="{{url_for('create_trek')}}" class="btn-link btn-done">Create New Trek</a>
+                    <a href="{{url_for('create_trek')}}" class="btn-link btn">Create New Trek</a>
                 </div>
-                <table class="center" name="Treks" border="1">
-                    <caption>Upcoming Treks</caption>
+                <br>
+                <!-- <table class="center" name="Treks" border="1">
+                    <caption class="cap">Upcoming Treks</caption>
                     <tr>
                         <th>Date</th>
                         <th>Location</th>
@@ -73,14 +143,14 @@
                     </tr>
                     {% for d in up_treks %}
                     <tr>
-                        <!-- <td>{{d.pname}}</td> CHECK -->
-                        <td>{{d.pname}}</td> <!--CHECK-->
-                        <td>{{d.dname}}</td> <!--CHECK-->
-                        <td>{{d.spz}}</td> <!--CHECK-->
+                        <td>{{d.pname}}</td> CHECK
+                        <td>{{d.pname}}</td> CHECK
+                        <td>{{d.dname}}</td> CHECK
+                        <td>{{d.spz}}</td> CHECK
                         <td><input type="button" value="View"></td>
                     </tr>
                     {% endfor %}
-                </table>
+                </table> -->
 
         </form>
     </div> 
