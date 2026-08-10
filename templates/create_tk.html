@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="input-form">
-    <h3 class="center">Creaate New Trak</h3>
+<div class="input-form box">
+    <h3 class="center cap">Creaate New Trak</h3>
     <br>
     <form action="{{url_for('create_trek')}}" method="POST">
     <table class="center">
@@ -16,14 +16,12 @@
         <tr>
             <td><label><stron>Duration (days): </stron></label></td>
             <td><input type="number" name="duration" min="1" required></td>
-            <!-- <td><input type="number" name="duration" min="1" ></td> -->
         </tr>
         <tr>
             <td><label><strong>Difficulty: </strong></label></td>
             <td>
                 <select name="difficulty">
                     <option value="Easy">Easy</option>
-                    <!-- <option value="Moderate">Moderate</option> -->
                     <option value="Moderate" selected>Moderate</option>
                     <option value="Hard">Hard</option>
                 </select>
@@ -31,17 +29,14 @@
         </tr>
         <tr>
             <td><label><strong>Available Slots: </strong></label></td>
-            <!-- <td><input type="number" name="slots"></td> -->
             <td><input type="number" name="slots" min="1" required></td>
         </tr>
         <tr>
             <td><label><strong>Start Date: </strong></label></td>
-            <!-- <td><input type="date" name="start_dt"></td> -->
             <td><input type="date" name="start_dt" required></td>
         </tr>
         <tr>
             <td><label><strong>End Date: </strong></label></td>
-            <!-- <td><input type="date" name="end_dt"></td> -->
             <td><input type="date" name="end_dt" required></td>
         </tr>
         <tr>
